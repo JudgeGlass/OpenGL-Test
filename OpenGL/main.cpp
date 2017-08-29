@@ -5,15 +5,16 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "Logger.h"
 
 #include "TextOverlay.h"
 
 long cool = 0;
 std::string FPS = "";
+
 std::string TestThread() {
 	return FPS;
 }
-
 
 void init2D(float r, float g, float b)
 {
@@ -175,7 +176,5 @@ int main(int argc, char** argv)
 	std::thread update(TestThread);
 	glutDisplayFunc(display);
 	glutIdleFunc(display);
-	
 	glutMainLoop();
-	
 }
