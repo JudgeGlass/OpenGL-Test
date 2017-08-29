@@ -1,4 +1,5 @@
 ﻿  main.cpp
-c:\users\judgeglass\source\repos\opengl\opengl\main.cpp(152): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\judgeglass\source\repos\opengl\opengl\main.cpp(228): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\judgeglass\source\repos\opengl\opengl\main.cpp(229): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
   OpenGL.vcxproj -> C:\Users\JudgeGlass\source\repos\OpenGL\Debug\OpenGL.exe
   OpenGL.vcxproj -> C:\Users\JudgeGlass\source\repos\OpenGL\Debug\OpenGL.pdb (Partial PDB)

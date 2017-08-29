@@ -12,28 +12,82 @@
 long cool = 0;
 std::string FPS = "";
 
+double rotate_y;
+double rotate_x;
+
+struct GlFPS {
+	int frame = 0;
+	int currenttime;
+	int timebase = 0;
+};
+
+enum CubeFaces {
+	Front,
+	Back,
+	Left,
+	Right,
+	Top,
+	Bottom
+};
+
 std::string TestThread() {
 	return FPS;
 }
 
 void init2D(float r, float g, float b)
 {
+	std::cout << CubeFaces::Front << std::endl;
+	std::cout << CubeFaces::Back << std::endl;
 	glClearColor(r, g, b, 0.0);
 	glMatrixMode(GL_PROJECTION);
 	gluOrtho2D(-50.0, 50.0, -50.0, 50.0);
+	glScalef(15.0, 15.0, 0.0);
 }
 
 void rectangle()
 {
-	glBegin(GL_QUADS);
-	glColor3f(1.0,0.0,0.0);
-	glVertex3f(-1.0f*30, -1.0f * 30, 0.0f);
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 1.0, 1.0);
+	glVertex3f(0.5, -0.5, 0.5);
+	glVertex3f(0.5, 0.5, 0.5);
+	glVertex3f(-0.5, 0.5, 0.5);
+	glVertex3f(-0.5, -0.5, 0.5);
+	glEnd();
+
+	// Purple side - RIGHT
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 1.0, 1.0);
+	glVertex3f(0.5, -0.5, -0.5);
+	glVertex3f(0.5, 0.5, -0.5);
+	glVertex3f(0.5, 0.5, 0.5);
+	glVertex3f(0.5, -0.5, 0.5);
+	glEnd();
+
+	// Green side - LEFT
+	glBegin(GL_POLYGON);
 	glColor3f(0.0, 1.0, 0.0);
-	glVertex3f(1.0f * 30, -1.0f * 30, 0.0f);
+	glVertex3f(-0.5, -0.5, 0.5);
+	glVertex3f(-0.5, 0.5, 0.5);
+	glVertex3f(-0.5, 0.5, -0.5);
+	glVertex3f(-0.5, -0.5, -0.5);
+	glEnd();
+
+	// Blue side - TOP
+	glBegin(GL_POLYGON);
 	glColor3f(0.0, 0.0, 1.0);
-	glVertex3f(1.0f * 30, 1.0f * 30, 0.0f);
-	glColor3f(1.0, 1.0, 0.0);
-	glVertex3f(-1.0f * 30, 1.0f * 30, 0.0f);
+	glVertex3f(0.5, 0.5, 0.5);
+	glVertex3f(0.5, 0.5, -0.5);
+	glVertex3f(-0.5, 0.5, -0.5);
+	glVertex3f(-0.5, 0.5, 0.5);
+	glEnd();
+
+	// Red side - BOTTOM
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.0, 0.0);
+	glVertex3f(0.5, -0.5, -0.5);
+	glVertex3f(0.5, -0.5, 0.5);
+	glVertex3f(-0.5, -0.5, 0.5);
+	glVertex3f(-0.5, -0.5, -0.5);
 	glEnd();
 }
 
@@ -110,10 +164,30 @@ void versionInfo()
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 }
-int frame = 0;
-int currenttime;
-int timebase = 0;
+
+void specialKeys(int key, int x, int y) {
+
+	//  Right arrow - increase rotation by 5 degree
+	if (key == GLUT_KEY_RIGHT)
+		rotate_y += 5;
+
+	//  Left arrow - decrease rotation by 5 degree
+	else if (key == GLUT_KEY_LEFT)
+		rotate_y -= 5;
+
+	else if (key == GLUT_KEY_UP)
+		rotate_x += 5;
+
+	else if (key == GLUT_KEY_DOWN)
+		rotate_x -= 5;
+
+	//  Request display update
+	glutPostRedisplay();
+
+}
+
 double delta = 0;
+GlFPS glFps;
 void display()
 {
 	
@@ -123,22 +197,22 @@ void display()
 		delta -= .00001;
 	else
 		delta += .00001;
-
-	frame++;
+	
+	glFps.frame++;
 
 	//get the current time
-	currenttime = glutGet(GLUT_ELAPSED_TIME);
+	glFps.currenttime = glutGet(GLUT_ELAPSED_TIME);
 
 	//check if a second has passed
-	if (currenttime - timebase > 1000)
+	if (glFps.currenttime - glFps.timebase > 1000)
 	{
 		std::stringstream ss;
-		ss << (int)(frame*1000.0 / (currenttime - timebase));
+		ss << static_cast<int> (glFps.frame*1000.0 / (glFps.currenttime - glFps.timebase));
 		FPS = ss.str();
 		std::cout << "FPS: " << ss.str() << std::endl;
 		//glutSetWindowTitle(ss.str());
-		timebase = currenttime;
-		frame = 0;
+		glFps.timebase = glFps.currenttime;
+		glFps.frame = 0;
 	}
 
 	
@@ -149,7 +223,10 @@ void display()
 
 	//glPushMatrix();
 	//glTranslatef(0.0, 0.0, -45.0);
-	glRotatef(delta, 0.0, 0.0, 1.0);
+	
+	//glRotatef(delta, 0.0, 1.0, 0.0);
+	glRotatef(rotate_x/100, 1.0, 0.0, 0.0);
+	glRotatef(rotate_y/100, 0.0, 1.0, 0.0);
 	rectangle();
 	//glPopMatrix();
 	
@@ -176,5 +253,6 @@ int main(int argc, char** argv)
 	std::thread update(TestThread);
 	glutDisplayFunc(display);
 	glutIdleFunc(display);
+	glutSpecialFunc(specialKeys);
 	glutMainLoop();
 }
