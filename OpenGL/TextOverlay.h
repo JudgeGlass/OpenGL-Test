@@ -7,9 +7,9 @@
 
 class TextOverlay {
 public:
-	TextOverlay(std::string text, int x, int y);
+	TextOverlay(std::string text, int x, int y, float r, float g, float b);
 private:
-
+	
 
 };
 

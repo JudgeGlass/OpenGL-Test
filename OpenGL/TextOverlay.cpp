@@ -8,7 +8,7 @@
 #include <string>
 #include <sstream>
 
-TextOverlay::TextOverlay(std::string text, int x, int y) {
+TextOverlay::TextOverlay(std::string text, int x, int y, float r, float g, float b) {
 	char menu[80];
 	std::stringstream ss;
 	ss << text;
@@ -18,7 +18,7 @@ TextOverlay::TextOverlay(std::string text, int x, int y) {
 	int len;
 	len = strlen(menu);
 
-	glColor3f(1, 1, 1);
+	glColor3f(r, g, b);
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();

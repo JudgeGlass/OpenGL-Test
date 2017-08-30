@@ -47,7 +47,7 @@ void init2D(float r, float g, float b)
 void rectangle()
 {
 	glBegin(GL_POLYGON);
-	glColor3f(1.0, 1.0, 1.0);
+	glColor3f(1.0, 0.0, 1.0);
 	glVertex3f(0.5, -0.5, 0.5);
 	glVertex3f(0.5, 0.5, 0.5);
 	glVertex3f(-0.5, 0.5, 0.5);
@@ -56,7 +56,7 @@ void rectangle()
 
 	// Purple side - RIGHT
 	glBegin(GL_POLYGON);
-	glColor3f(1.0, 1.0, 1.0);
+	glColor3f(1.0, 1.0, 0.0);
 	glVertex3f(0.5, -0.5, -0.5);
 	glVertex3f(0.5, 0.5, -0.5);
 	glVertex3f(0.5, 0.5, 0.5);
@@ -89,6 +89,8 @@ void rectangle()
 	glVertex3f(-0.5, -0.5, 0.5);
 	glVertex3f(-0.5, -0.5, -0.5);
 	glEnd();
+
+
 }
 
 void debugText()
@@ -225,12 +227,12 @@ void display()
 	//glTranslatef(0.0, 0.0, -45.0);
 	
 	//glRotatef(delta, 0.0, 1.0, 0.0);
-	glRotatef(rotate_x/100, 1.0, 0.0, 0.0);
-	glRotatef(rotate_y/100, 0.0, 1.0, 0.0);
+	glRotatef((GLfloat)rotate_x/100, (GLfloat) 1.0, (GLfloat)0.0, (GLfloat)0.0);
+	glRotatef((GLfloat)rotate_y/100, (GLfloat)0.0, (GLfloat)1.0, (GLfloat)0.0);
 	rectangle();
 	//glPopMatrix();
 	
-	TextOverlay *t = new TextOverlay("Text class test", 0, 120);
+	TextOverlay *t = new TextOverlay("Text class test", 0, 120, 0,1.0,7.0);
 	
 	versionInfo();
 	debugText();
