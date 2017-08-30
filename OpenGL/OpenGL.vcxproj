@@ -117,10 +117,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TextOverlay.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="TextOverlay.h" />
   </ItemGroup>
