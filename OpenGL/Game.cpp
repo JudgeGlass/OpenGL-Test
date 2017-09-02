@@ -242,9 +242,9 @@ void display()
 	glFlush();
 }
 
-void Game::runGame(int argc, char** argv)
+void Game::runGame()
 {
-	glutInit(&argc, argv);
+	
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 
 	glutInitWindowPosition(0, 0);

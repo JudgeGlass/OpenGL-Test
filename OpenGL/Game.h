@@ -3,7 +3,7 @@
 
 class Game {
 public:
-	void runGame(int argc, char** argv);
+	void runGame();
 private:
 };
 
